@@ -24,7 +24,7 @@
 \def\news@title{新闻简报}
 \def\news@author{ChatGPT}
 \def\news@note{}
-\newcommand{\SetKeys}[1]{\setkeys{news}{#1}}
+\newcommand{\NewsSetKeys}[1]{\setkeys{news}{#1}}
 \newcommand{\newsheader}{\begin{center}{\Huge\bfseries\color{newsblue}\news@title\par}\vspace{2mm}{\small\news@date\quad 第\news@vol 期\quad \news@author\par}\vspace{2mm}{\color{newsgray}\rule{\linewidth}{0.5pt}\par}\end{center}\noindent\news@note\par\vspace{3mm}}
 \newenvironment{documents}{\newsheader\begin{multicols}{3}\setlength{\parindent}{0pt}\setlength{\parskip}{4pt}}{\end{multicols}}
 \newcommand{\newsitem}[3]{\par\medskip{\large\bfseries\color{newsblue}#1\par}{\footnotesize\color{newsgray}#2\par}\smallskip #3\par\medskip{\color{newsgray}\rule{\linewidth}{0.25pt}}\par}
