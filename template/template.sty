@@ -2,9 +2,14 @@
 \ProvidesPackage{template}[2026/10/14 News digest layout]
 \RequirePackage{xeCJK}
 \RequirePackage{fontspec}
-\RequirePackage[a3paper,landscape,margin=17mm]{geometry}
+\RequirePackage[a4paper,margin=13mm,top=17mm,bottom=17mm,headheight=13pt]{geometry}
+% Two independent A4 portrait logical pages form each A3 landscape sheet.
+\RequirePackage{pgfpages}
+\pgfpagesuselayout{2 on 1}[a3paper,landscape,border shrink=0mm]
 \RequirePackage{xcolor}
 \RequirePackage{multicol}
+\setlength{\columnsep}{6mm}
+\setlength{\columnseprule}{0.25pt}
 \RequirePackage{hyperref}
 \RequirePackage{xkeyval}
 \RequirePackage{fancyhdr}
@@ -25,9 +30,15 @@
 \def\news@author{ChatGPT}
 \def\news@note{}
 \newcommand{\NewsSetKeys}[1]{\setkeys{news}{#1}}
+\let\SetKeys\NewsSetKeys
 \newcommand{\newsheader}{\begin{center}{\Huge\bfseries\color{newsblue}\news@title\par}\vspace{2mm}{\small\news@date\quad 第\news@vol 期\quad \news@author\par}\vspace{2mm}{\color{newsgray}\rule{\linewidth}{0.5pt}\par}\end{center}\noindent\news@note\par\vspace{3mm}}
-\newenvironment{documents}{\newsheader\begin{multicols}{3}\setlength{\parindent}{0pt}\setlength{\parskip}{4pt}}{\end{multicols}}
+\newenvironment{documents}{\newsheader\begin{multicols}{2}\setlength{\parindent}{0pt}\setlength{\parskip}{4pt}}{\end{multicols}}
 \newcommand{\newsitem}[3]{\par\medskip{\large\bfseries\color{newsblue}#1\par}{\footnotesize\color{newsgray}#2\par}\smallskip #3\par\medskip{\color{newsgray}\rule{\linewidth}{0.25pt}}\par}
 \newcommand{\newsitemwithpoints}[4]{\newsitem{#1}{#2}{#3\begin{itemize}#4\end{itemize}}}
 \makeatother
-\pagestyle{fancy}\fancyhf{}\fancyfoot[C]{\thepage}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{newsgray}\news@date}
+\fancyhead[R]{\small\color{newsgray}\news@title}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.25pt}
