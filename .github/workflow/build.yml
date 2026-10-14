@@ -1,0 +1,117 @@
+name: Build Daily News PDF
+
+on:
+    push:
+        branches: [master, main]
+        paths:
+            - "sources/**"
+            - "template/**"
+            - ".github/workflows/build.yml"
+    pull_request:
+        paths:
+            - "sources/**"
+            - "template/**"
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        container:
+            image: texlive/texlive:latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Install extra packages
+              run: |
+                  apt-get update
+                  apt-get install -y --no-install-recommends \
+                    fonts-noto-cjk \
+                    latexmk \
+                    ghostscript \
+                    poppler-utils
+                  rm -rf /var/lib/apt/lists/*
+
+            - name: Show TeX version
+              run: |
+                  xelatex --version
+                  bibtex --version
+
+            - name: Find main.tex files
+              id: find
+              run: |
+                  mapfile -t files < <(find sources -name 'main.tex' -type f | sort)
+                  if [ ${#files[@]} -eq 0 ]; then
+                    echo "No main.tex found under sources/"
+                    exit 1
+                  fi
+                  printf '%s\n' "${files[@]}"
+                  {
+                    echo "files<<EOF"
+                    printf '%s\n' "${files[@]}"
+                    echo "EOF"
+                  } >> "$GITHUB_OUTPUT"
+
+            - name: Build each main.tex
+              run: |
+                  set -e
+                  while IFS= read -r tex; do
+                    [ -z "$tex" ] && continue
+                    dir=$(dirname "$tex")
+                    base=$(basename "$tex" .tex)
+                    echo "::group::Building $dir/$base.tex"
+                    cd "$dir"
+                    xelatex -interaction=nonstopmode -halt-on-error "$base.tex"
+                    bibtex "$base" || true
+                    xelatex -interaction=nonstopmode -halt-on-error "$base.tex"
+                    xelatex -interaction=nonstopmode -halt-on-error "$base.tex"
+                    cd - >/dev/null
+                    echo "::endgroup::"
+                  done <<< "${{ steps.find.outputs.files }}"
+
+            - name: Collect PDFs into outputs/
+              run: |
+                  set -e
+                  mkdir -p outputs
+                  while IFS= read -r tex; do
+                    [ -z "$tex" ] && continue
+                    dir=$(dirname "$tex")
+                    base=$(basename "$tex" .tex)
+                    pdf="$dir/$base.pdf"
+                    if [ ! -f "$pdf" ]; then
+                      echo "Missing PDF: $pdf"
+                      exit 1
+                    fi
+                    # 用相对 sources 的路径命名，避免重名覆盖
+                    rel=$(echo "$dir" | sed 's|^sources/||')
+                    out="outputs/${rel}-${base}.pdf"
+                    mkdir -p "$(dirname "$out")"
+                    cp "$pdf" "$out"
+                    echo "Collected $out"
+                  done <<< "${{ steps.find.outputs.files }}"
+                  find outputs -type f -name '*.pdf' | sort
+
+            - name: Upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                  name: daily-news-pdfs
+                  path: outputs/**/*.pdf
+                  if-no-files-found: error
+
+            - name: Commit PDFs to outputs/ (only on push to master/main)
+              if: github.event_name == 'push'
+              run: |
+                  set -e
+                  git config user.name  "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+                  git add outputs
+                  if git diff --cached --quiet; then
+                    echo "No changes to commit"
+                  else
+                    git commit -m "chore(outputs): rebuild PDFs [skip ci]"
+                    git push
+                  fi
