@@ -1,0 +1,57 @@
+name: Build News PDF
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'sources/**'
+      - 'template/**'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: news-build
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: texlive/texlive:latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install fonts
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends fonts-noto-cjk
+          fc-cache -f
+      - name: Compile changed or missing issues
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p outputs
+          export TEXINPUTS="$GITHUB_WORKSPACE/template//:"
+          while IFS= read -r tex; do
+            dir="${tex%/*}"
+            rel="${dir#sources/}"
+            dest="outputs/${rel}.pdf"
+            mkdir -p "$(dirname "$dest")"
+            (cd "$dir" && xelatex -interaction=nonstopmode -halt-on-error main.tex && bibtex main && xelatex -interaction=nonstopmode -halt-on-error main.tex && xelatex -interaction=nonstopmode -halt-on-error main.tex)
+            cp "$dir/main.pdf" "$dest"
+          done < <(find sources -type f -name main.tex | sort)
+          find outputs -type f -name '*.pdf' -print
+      - name: Upload PDF artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: news-pdfs
+          path: outputs/
+          if-no-files-found: error
+      - name: Commit generated PDFs
+        if: github.event_name == 'push'
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add outputs/
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore: publish compiled news PDFs [skip ci]'
+            git push
+          fi
