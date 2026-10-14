@@ -1,0 +1,140 @@
+\documentclass[10pt]{article}
+\usepackage{template}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{booktabs,array,graphicx}
+\usepackage[version=4]{mhchem}
+\usepackage{microtype}
+\setlength{\emergencystretch}{2em}
+\SetKeys{date=2026-10-14,vol=002,title={每日新闻｜图文公式测试正刊},author={编辑部},note={本期专题：科学自动化与系统工程。新闻事实与示意性数学模型分开标记；配图为可复现的矢量示意图，非新闻现场照片。}}
+\begin{document}
+\begin{documents}
+
+\newsitem{机器人如何探索不对称反应？}{科学与化学｜Nature Communications｜2026-10-13}{
+\textbf{事实。}Klochowicz 等研究人员将深度强化学习与实验机器人组合，以数字孪生环境训练策略，再迁移到自动化实验流程，探索不对称催化反应。论文报告一个约 30 天的探索周期以及四类高对映选择性转化。\cite{Klochowicz2026}
+
+\textbf{方法解读。}在抽象模型里，反应条件可以写成状态 $s_t$，下一轮实验 $a_t$ 是策略所选择的动作；观测到实验结果 $r_t$ 后，实验系统调整后续探索方向。这与经典“固定催化剂再优化温度”的流程有重要区别：动作空间可以包含底物、试剂、催化剂乃至下一阶段需要测试的反应假设。
+
+\begin{equation}
+Q^\pi(s,a)=\mathbb E_\pi\!\left[
+ \sum_{k=0}^{\infty}\gamma^k r_{t+k}\,\middle|\,s_t=s,a_t=a\right].
+\end{equation}
+\textit{注：该式是用于解释强化学习思想的标准示意公式，并非论文所声称采用的精确损失函数。}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth, font=\scriptsize, node distance=5mm, every node/.style={align=center}]
+\node[draw,rounded corners,fill=blue!7,minimum width=27mm,minimum height=9mm] (agent) {策略模型\\提出实验};
+\node[draw,rounded corners,below=of agent,fill=gray!8,minimum width=27mm,minimum height=9mm] (lab) {自动实验平台\\执行与测量};
+\node[draw,rounded corners,below=of lab,fill=green!8,minimum width=27mm,minimum height=9mm] (obs) {结果记录\\产率与选择性};
+\draw[->,thick] (agent)--(lab);
+\draw[->,thick] (lab)--(obs);
+\draw[->,thick] (obs.east) -- ++(4mm,0) |- (agent.east);
+\end{tikzpicture}
+
+{\footnotesize 图 1｜实验决策闭环（编辑绘制的原理示意）}
+\end{center}
+
+\textbf{判断。}闭环能否稳定地发现有效反应，比单次预测准确率更值得关注；但成果仍受实验装置、底物集合及预先定义的搜索空间限制。
+}
+
+\newsitem{不对称合成的数值如何理解？}{方法笔记｜编辑解析}{
+常见的对映体过量值（enantiomeric excess, $ee$）定义为
+\begin{equation}
+ee=\frac{|n_R-n_S|}{n_R+n_S}\times100\%.
+\end{equation}
+例如，一次测量得到比例 $R:S=93:7$，那么 $ee=86\%$。\textbf{这里的 93:7 仅是排版与计算示例，不是上述研究的实验数据。}
+
+\begin{center}
+\begin{tikzpicture}[x=0.36mm,y=2.8mm,font=\scriptsize]
+\draw[->] (0,0)--(110,0) node[right] {比例（\%）};
+\draw[->] (0,0)--(0,11);
+\fill[blue!60] (0,6) rectangle (93,8);
+\fill[orange!70] (0,2) rectangle (7,4);
+\node[left] at (0,7) {$R$};
+\node[left] at (0,3) {$S$};
+\node[right] at (93,7) {93};
+\node[right] at (7,3) {7};
+\end{tikzpicture}
+
+{\footnotesize 图 2｜假设数据的比例条形图}
+\end{center}
+用箭头写出一个\textbf{纯示例}的有机反应图式，以检验化学符号和上下标排版：
+\begin{equation}
+\ce{R-CHO + H2N-R' <=> R-CH=N-R' + H2O}.
+\end{equation}
+此图式不应误读为上述新闻中的具体反应途径。
+}
+
+\newsitem{NVIDIA Nova 与 Rust GPU 驱动：基础设施比口号重要}{Linux／Rust｜Phoronix｜2026-10}{
+围绕 Linux 下一阶段开发的 Nova 驱动与 Rust DRM 基础设施仍在演进。\cite{Larabel2026} 这类变更涉及资源生命周期、显存映射、设备接口和错误路径，而不仅是把已有 C 语言代码逐行翻译为 Rust。
+
+\textbf{工程问题。}GPU 内存管理中的一个关键挑战是地址空间的映射关系。设虚拟地址区间为 $V$、物理页集合为 $P$，页表提供部分映射
+\[
+f:V\rightharpoonup P.
+\]
+即使内存安全语言可以限制悬垂引用，GPU 与 CPU 异步访问仍可能遇到次序错误、过时的 TLB 项和不一致的所有权预期。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,font=\scriptsize]
+\draw[rounded corners,fill=blue!5] (0,0) rectangle (2.0,0.8);
+\draw[rounded corners,fill=orange!8] (2.8,0) rectangle (4.8,0.8);
+\node at (1,0.4) {虚拟地址};
+\node at (3.8,0.4) {显存页};
+\draw[->,thick] (2.04,0.4)--(2.76,0.4);
+\node[above] at (2.4,0.4) {映射};
+\end{tikzpicture}
+
+{\footnotesize 图 3｜地址映射的抽象结构}
+\end{center}
+
+\textbf{判断。}对大型图形系统而言，可维护的接口契约、失败恢复和同步测试，可能比单纯“采用 Rust”更能预测最终质量。
+}
+
+\newsitem{从公式到图表：怎样避免把示例误写成结论？}{编者专栏｜科学报道规范}{
+科技报道中的\textbf{引文、模型、插图、推测}应当有不同的地位。新闻中出现一幅曲线，不表示那幅曲线由论文测得；计算演示给出的数字，也不代表真实样本参数。为此，本刊对示意图明确标注“编辑绘制”，对公式明确标注“标准模型”或“示例”。
+
+一个简单的审校检查表：
+\begin{itemize}
+\item \textbf{事实层：}事件、发表日期、论文主张及可检查的原始来源；
+\item \textbf{解释层：}抽象模型和适用边界；
+\item \textbf{评论层：}具有不确定性的预测或编辑判断。
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+内容类型 & 应标明的信息\\
+\midrule
+报道 & 日期与来源\\
+实验数据 & 来源或数据集\\
+示意图 & 绘制者与用途\\
+数学公式 & 定义与适用条件\\
+观点 & 推断依据与边界\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\textbf{链接压力测试：}论文 DOI 使用可点击的长网址：
+\url{https://doi.org/10.1038/s41467-026-78271-9}。
+
+这段额外的正文还用于检验长段落、标点符号、混排英文、数学符号和项目列表在狭窄栏宽下的自动换行。报纸中的版面空间非常有限，但可读性不能完全让位于填满版面。在实际编辑环节，新闻的长度应当依据事实的重要性，而非为了填满某个空白角落而任意增加。论文的实验性结论与编辑的评价之间有必要留出可见的界限：读者需要在快速浏览时就能知道，哪一段是可核查的结果，哪一段只是合理的分析。
+}
+
+\newsitem{系统技术与实验科学：看起来不同的共同问题}{本刊观察｜2026-10-14}{
+从自动化实验平台到显存资源管理，这两种工程工作都涉及状态、行动、反馈与可靠性。二者并不能简单归为同一类问题，却可以用“可观察性”和“可恢复性”进行对照：
+
+\[
+\text{策略}\longrightarrow \text{执行}\longrightarrow
+\text{观测}\longrightarrow \text{修正}.
+\]
+
+自动化实验需要区分噪声和真实反应效应，内核驱动需要区分瞬时错误与持久不一致。两者都不可能只靠一个看上去正确的输出证明整个系统可靠。
+
+当系统运行很久、测试成本很高或外部环境不完全可控时，记录完整的实验条件、代码版本、失败状态与恢复路径就格外重要。因此，一个新闻档案仓库也值得采取可重现的工程做法：保存源文件、文献数据、模板版本和构建产物，而不是仅保存最终 PDF。
+}
+
+\end{documents}
+\bibliographystyle{plain}
+\bibliography{refs}
+\end{document}
