@@ -1,178 +1,33 @@
-% template.sty
-% 每日新闻汇总 LaTeX 模板
-% 编译：xelatex -> bibtex -> xelatex -> xelatex
-%
-% 用法:
-%   \usepackage{../template/template.sty}
-%   \SetKeys{date = 2026-10-14, vol = 12, ...}
-%   \begin{documents}
-%     \newsitem{标题}{来源}{正文...}
-%   \end{documents}
-
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{template}[2026/10/14 Daily news digest template, A3 two-column nested]
-
-% ---------- 依赖 ----------
-\RequirePackage{xeCJK}          % XeLaTeX 中文支持
-\RequirePackage{geometry}
-\RequirePackage{xkeyval}
-\RequirePackage{graphicx}
+\ProvidesPackage{template}[2026/10/14 News digest layout]
+\RequirePackage{xeCJK}
+\RequirePackage{fontspec}
+\RequirePackage[a3paper,landscape,margin=17mm]{geometry}
 \RequirePackage{xcolor}
-\RequirePackage{enumitem}
-\RequirePackage{titlesec}
-\RequirePackage{fancyhdr}
+\RequirePackage{multicol}
 \RequirePackage{hyperref}
-\RequirePackage{etoolbox}
-\RequirePackage{multicol}        % 双栏 / 子栏
-\RequirePackage{balance}
-\RequirePackage{url}
-
-% ---------- 中文字体 ----------
-% 如系统无这些字体，可换成 Fandol / Noto / 思源等
+\RequirePackage{xkeyval}
+\RequirePackage{fancyhdr}
 \setCJKmainfont{Noto Serif CJK SC}
-\setCJKsansfont{Noto Sans CJK SC}
-\setCJKmonofont{Noto Sans Mono CJK SC}
 \setmainfont{Latin Modern Roman}
-\setsansfont{Latin Modern Sans}
-\setmonofont{Latin Modern Mono}
-
-% ---------- 页面：A3 横向 ----------
-\geometry{
-  paperwidth=420mm,
-  paperheight=297mm,
-  landscape,
-  margin=15mm,
-  top=18mm,
-  bottom=18mm,
-  columnsep=8mm
-}
-
-% ---------- 颜色 ----------
-\definecolor{newsblue}{RGB}{20, 80, 150}
-\definecolor{newsgray}{RGB}{90, 90, 90}
-\definecolor{newsrule}{RGB}{200, 200, 200}
-
-% ---------- 元数据键 ----------
+\definecolor{newsblue}{RGB}{18,64,113}
+\definecolor{newsgray}{RGB}{85,90,99}
+\hypersetup{colorlinks=true,urlcolor=newsblue,linkcolor=newsblue,citecolor=newsblue}
+\makeatletter
 \define@key{news}{date}{\def\news@date{#1}}
 \define@key{news}{vol}{\def\news@vol{#1}}
 \define@key{news}{title}{\def\news@title{#1}}
 \define@key{news}{author}{\def\news@author{#1}}
-\define@key{news}{source}{\def\news@source{#1}}
 \define@key{news}{note}{\def\news@note{#1}}
-
 \def\news@date{\today}
 \def\news@vol{1}
-\def\news@title{每日新闻汇总}
-\def\news@author{Agent}
-\def\news@source{}
+\def\news@title{新闻简报}
+\def\news@author{ChatGPT}
 \def\news@note{}
-
 \newcommand{\SetKeys}[1]{\setkeys{news}{#1}}
-
-% ---------- 标题区 ----------
-\newcommand{\news@makeheader}{%
-  \begin{center}
-    {\LARGE\bfseries\color{newsblue} \news@title}\\[0.4em]
-    {\small\color{newsgray}
-      \ifx\news@date\empty\else 日期：\news@date\fi
-      \ifx\news@vol\empty\else \quad 第 \news@vol\ 期\fi
-      \ifx\news@author\empty\else \quad 编制：\news@author\fi
-      \ifx\news@source\empty\else \quad 来源：\news@source\fi
-    }\\[0.3em]
-    \textcolor{newsrule}{\rule{\textwidth}{0.4pt}}
-  \end{center}
-  \vspace{0.4em}
-  \ifx\news@note\empty\else
-    {\small\itshape\color{newsgray} \news@note\par}
-    \vspace{0.6em}
-  \fi
-}
-
-% ---------- 新闻条目 ----------
-\newcommand{\newsitem}[3]{%
-  \par\medskip
-  \noindent
-  {\large\bfseries\color{newsblue} #1}%
-  \ifx#2\empty\else
-    \hfill{\small\color{newsgray} #2}%
-  \fi
-  \par\nobreak
-  \vspace{0.25em}
-  \noindent #3
-  \par\smallskip
-  \textcolor{newsrule}{\rule{\linewidth}{0.3pt}}
-  \par\medskip
-}
-
-\newcommand{\newsitemwithpoints}[4]{%
-  \par\medskip
-  \noindent
-  {\large\bfseries\color{newsblue} #1}%
-  \ifx#2\empty\else
-    \hfill{\small\color{newsgray} #2}%
-  \fi
-  \par\nobreak
-  \vspace{0.25em}
-  \noindent #3
-  \par\smallskip
-  \begin{itemize}[leftmargin=1.2em, itemsep=0.12em, topsep=0.15em]
-    #4
-  \end{itemize}
-  \par\smallskip
-  \textcolor{newsrule}{\rule{\linewidth}{0.3pt}}
-  \par\medskip
-}
-
-% ---------- documents 环境 ----------
-% 外层：A3 横向双栏
-% 内层：每栏再套一个 multicols，形成“双子栏”
-\newenvironment{documents}{%
-  \news@makeheader
-  \setlength{\parindent}{0pt}%
-  \setlength{\parskip}{0.35em}%
-  \begin{multicols}{2}%          % 外层双栏
-    \raggedcolumns
-    \begin{multicols}{2}%        % 内层双子栏（栏中栏）
-      \raggedcolumns
-}{%
-    \end{multicols}%             % 关闭内层
-  \end{multicols}%               % 关闭外层
-  \vspace{0.6em}
-  \begin{center}
-    {\small\color{newsgray} --- 完 ---}
-  \end{center}
-}
-
-% ---------- 页眉页脚 ----------
-\pagestyle{fancy}
-\fancyhf{}
-\fancyhead[L]{\small\color{newsgray}\news@title}
-\fancyhead[R]{\small\color{newsgray}\news@date}
-\fancyfoot[C]{\small\thepage}
-\renewcommand{\headrulewidth}{0.3pt}
-\renewcommand{\footrulewidth}{0pt}
-
-% ---------- 文献引用 ----------
-% 配合 bibtex，编译链：xelatex -> bibtex -> xelatex -> xelatex
-% 主文档中请使用 \bibliographystyle{...} 和 \bibliography{...}
-\newcommand{\news@bibsection}{%
-  \vspace{0.8em}
-  \textcolor{newsrule}{\rule{\linewidth}{0.4pt}}
-  \section*{\color{newsblue}\small 参考文献}
-  \small
-}
-% 若希望在 documents 环境内直接插入文献表，可在主文档中调用：
-%   \news@bibsection
-%   \bibliographystyle{plain}
-%   \bibliography{refs}
-% 注意：\bibliography 需放在 \begin{document} 之后、\end{document} 之前。
-
-% ---------- 超链接 ----------
-\hypersetup{
-  colorlinks=true,
-  linkcolor=newsblue,
-  urlcolor=newsblue,
-  citecolor=newsblue
-}
-
-\endinput
+\newcommand{\newsheader}{\begin{center}{\Huge\bfseries\color{newsblue}\news@title\par}\vspace{2mm}{\small\news@date\quad 第\news@vol 期\quad \news@author\par}\vspace{2mm}{\color{newsgray}\rule{\linewidth}{0.5pt}\par}\end{center}\noindent\news@note\par\vspace{3mm}}
+\newenvironment{documents}{\newsheader\begin{multicols}{3}\setlength{\parindent}{0pt}\setlength{\parskip}{4pt}}{\end{multicols}}
+\newcommand{\newsitem}[3]{\par\medskip{\large\bfseries\color{newsblue}#1\par}{\footnotesize\color{newsgray}#2\par}\smallskip #3\par\medskip{\color{newsgray}\rule{\linewidth}{0.25pt}}\par}
+\newcommand{\newsitemwithpoints}[4]{\newsitem{#1}{#2}{#3\begin{itemize}#4\end{itemize}}}
+\makeatother
+\pagestyle{fancy}\fancyhf{}\fancyfoot[C]{\thepage}
