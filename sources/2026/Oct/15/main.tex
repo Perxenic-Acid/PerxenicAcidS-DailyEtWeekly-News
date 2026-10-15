@@ -1,4 +1,99 @@
-\documentclass{article}
+\documentclass[10pt]{article}
 \usepackage{template}
-\SetKeys{date=2026-10-15,vol=002,title={每日有趣新闻}}
-\begin{document}\begin{documents}测试。\end{documents}\end{document}
+\usepackage{amsmath,amssymb}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
+\usepackage{booktabs,array,microtype}
+\setlength{\emergencystretch}{2em}
+\SetKeys{date=2026-10-15,vol=002,title={每日有趣新闻｜研究与工程},author={ChatGPT 编辑部},note={\small 截稿：北京时间 10 月 15 日上午。聚焦 10 月 14 日正式发表的论文与项目公告。每则区分事实、解释与判断；插图均为编辑绘制。}}
+\begin{document}
+\begin{documents}
+
+\newsitem{微塑料遇水，也可能自发产生自由基}{化学与环境｜Nature｜2026-10-14}{
+\textbf{事实。}Qian 等在六种常见微塑料与水的界面观察到活性氧物种自发生成，尤其关注羟基自由基。聚苯乙烯（PS）微塑料与甲基橙水溶液共存十天，实验报告染料降解接近 90\%；在其他溶剂中的对照结果不同。实验与从头算模拟共同提示：疏水性、界面静电和部分溶剂化可以改变氧化反应的能量条件。\cite{Qian2026}
+
+\textbf{解读。}材料本体的化学稳定性不等于固液界面完全惰性。论文还观察了蛋白聚集及细胞损伤指标，但\textbf{不能据此直接计算人体健康风险}；真实环境中的浓度、盐度、表面老化与暴露时长仍须独立研究。
+
+\textbf{判断。}未来微塑料评价不能只按颗粒数和质量分类，还应关注界面面积与化学活性。\ \href{https://doi.org/10.1038/s41586-026-11141-y}{论文原文}
+}
+
+\newsitem{两至六周天气预测：修正概率，而不是消灭混沌}{AI 与气象｜Nature｜2026-10-14}{
+\textbf{事实。}Guan 等提出概率偏差校正（PBC），从历史预报和观测学习修正集合预报的概率分布。论文报告：PBC 在 2025 年测试中将 ECMWF 次季节 AI 预报系统的平均概率技巧分数从约 0.03 提升到约两倍；其方案 MicroDuet 在 AI Weather Quest 的相关实时评测中居于前列。\cite{Guan2026}
+
+\textbf{方法。}第 3—4 周的预报应理解为概率分布，而非某日天气的确定值。若 $B_k$ 表示某个温度区间，可写
+\[
+p_k=\Pr(Y\in B_k\mid X),\qquad \sum_k p_k=1.
+\]
+其中 $X$ 是预报信息；此式是通用定义，并非论文的完整算法。
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,font=\scriptsize]
+\node[draw,rounded corners,fill=blue!7] (a) at (0,0) {集合预报};
+\node[draw,rounded corners,fill=orange!9] (b) at (2.3,0) {历史校正};
+\node[draw,rounded corners,fill=green!9] (c) at (4.6,0) {概率输出};
+\draw[->,thick] (a)--(b);\draw[->,thick] (b)--(c);
+\end{tikzpicture}
+
+{\footnotesize 图 1｜概率后处理流程（原理示意）}
+\end{center}
+\textbf{边界。}技巧分数翻倍不等于准确率翻倍，更不意味着一个月后天气可精确预报。作者团队含 Microsoft 员工及持股者；评价应以可复核的基线和实时测试为依据。\ \href{https://doi.org/10.1038/s41586-026-11126-x}{论文原文}
+}
+
+\newsitem{十二颗卫星参加甲烷监测盲测}{航天遥感｜Nature｜2026-10-14}{
+\textbf{事实。}Reuland 等在美国亚利桑那州进行持续一年的单盲实验：746 次测试事件包括 481 次定量甲烷释放和 265 次空白对照。十二颗卫星、九国十五个团队产生逾 2250 个估计。专门设计的甲烷仪器在研究条件下取得 92--100\% 真阳性率和 0--11\% 假阳性率；全部假阳性中有 79\% 来自采用 AI 的分析方法。\cite{Reuland2026}
+
+\begin{center}
+\begin{tikzpicture}[x=0.08mm,y=3mm,font=\scriptsize]
+\fill[blue!60] (0,5) rectangle (481,7);
+\fill[orange!65] (0,1) rectangle (265,3);
+\node[left] at (0,6) {释放};\node[left] at (0,2) {空白};
+\node[right] at (481,6) {481};\node[right] at (265,2) {265};
+\end{tikzpicture}
+
+{\footnotesize 图 2｜746 次测试的构成（据论文数据绘制）}
+\end{center}
+\textbf{解读。}盲测把漏报、误报和定量误差分开衡量，避免只展示成功案例。云量超过 20\% 会削弱性能；研究主要评价\textbf{位置大致已知}的点源，不能直接推断全球所有未知泄漏的发现率。\ \href{https://doi.org/10.1038/s41586-026-11115-0}{论文原文}
+}
+
+\newsitem{全球陆地保护面积：18.5\% 还是 26.81\%？}{生态与统计｜Nature｜2026-10-14}{
+\textbf{事实。}O'Neill 等汇集 25 个国家和地区的国家级数据并抽样外推，估计 2022 年全球约 26.81\% 的陆地属于某种保护或保育区域。它高于常见的 18.5\% 全球统计，差异涉及国家级保护区和可能符合条件的其他有效区域保育措施（OECM）。\cite{ONeill2026}
+
+\textbf{边界。}26.81\% 是基于样本及类别判定的\textbf{估计}，并非全球逐地块普查，更不是 2026 年实时值。面积接近 2030 年的 30\% 目标，也不意味着物种数量、生态区代表性和管理质量同步达标。
+
+\textbf{判断。}保护政策不能只追求面积指标；生境质量、连通性和长期生物多样性变化同样重要。\ \href{https://doi.org/10.1038/s41586-026-11157-4}{论文原文}
+}
+
+\newsitem{分子自旋链的奇偶性改变超导耦合}{凝聚态物理｜Nature｜2026-10-14}{
+\textbf{事实。}Vaxevani 等在邻近超导体的金表面构造由自旋 1 三角烯单元组成的分子 Haldane 链。扫描隧道谱显示：奇数单元链具有总自旋 $S=1$ 基态及能隙内 Yu--Shiba--Rusinov 束缚态；偶数单元链则表现为 $S=0$ 基态，与超导体的耦合不同。\cite{Vaxevani2026}
+
+\textbf{解释。}链端的有效自旋 $1/2$ 与另一端相互作用，其结果受链长奇偶性影响。这为分子尺度调节自旋与超导凝聚态的相互作用提供了实验证据。\textbf{并非}已制成实用量子计算机：退相干、读出和可扩展制造仍是开放问题。\ \href{https://doi.org/10.1038/s41586-026-11117-y}{论文原文}
+}
+
+\newsitem{Rust 虚拟机监控器 Cloud Hypervisor 发布 v54.0}{Rust／Linux／虚拟化｜项目发布｜2026-10-14}{
+\textbf{事实。}Cloud Hypervisor v54.0 正式发布。项目承诺接受来自前两个版本的正向实时迁移（例如 v52、v53 迁移到 v54），并增加支持迁移的 VFIO 设备热迁移、迁移取消、事件监视改进及实验性 ARM SMMUv3 仿真。项目在特定双路、3\,TiB 客体测试中报告内存预触碰耗时由 51.8 秒降为 7.4 秒。\cite{CloudHypervisor54}
+
+\textbf{工程边界。}VFIO 热迁移依赖支持该功能的宿主驱动与 \texttt{iommufd}；虚拟 IOMMU 后面的 VFIO 设备暂不支持迁移，反向迁移亦无兼容保证。迁移成功不仅是内存复制，还要求设备状态、脏页和失败恢复一致。\ \href{https://github.com/cloud-hypervisor/cloud-hypervisor/releases/tag/v54.0}{官方发布记录}
+}
+
+\newsitem{GitHub Actions 的依赖锁文件进入公开预览}{软件供应链｜GitHub 官方公告｜2026-10-14}{
+\textbf{事实。}GitHub 公布 Actions workflow lockfiles 公开预览。使用 \texttt{gh actions-lock} 可以生成 \texttt{actions.lock}，记录 Action、可复用工作流及其传递依赖对应的具体提交，减少 tag 或分支漂移带来的供应链风险。\cite{GitHubLock2026}
+
+\textbf{边界。}锁定提交不保证依赖本身安全，首次锁定前和每次升级时仍须审查。预览期的计划与组织策略限制以官方文档为准。\textbf{判断。}对拥有发布权限的 CI 流程，这比单纯相信版本标签更可审计。\ \href{https://github.blog/changelog/2026-10-14-github-actions-workflow-lockfiles-in-public-preview/}{官方公告}
+}
+
+\newsitem{多模型代理：复核机制比模型数量更重要}{AI 开发工具｜GitHub 官方公告｜2026-10-14}{
+\textbf{事实。}GitHub 更新研究预览中的 HydraFusion 并推出 Max。官方称新版可按任务阶段调节推理强度：初稿较低，复核较高；Cascade 加入判定与按需修复，Critique 更强调直接检查工作区与并行复核。\cite{HydraFusion2026}
+
+\textbf{判断。}多模型编排是否值得采用，取决于独立复核能否发现共同盲点、修复质量与成本，而不是模型数量。以上是厂商的\textbf{产品能力声明}，不应视作独立基准测试结论。\ \href{https://github.blog/changelog/2026-10-14-hydrafusion-updates-and-new-max-option/}{官方公告}
+}
+
+\newsitem{编者手记：可信度取决于怎样验证}{方法评论｜2026-10-15}{
+甲烷卫星需要有空白对照的盲测；概率天气模型需要真实时间推进的外部测试；全球保育面积估计需要检查抽样与类别定义。三者的共同点不是某种技术万能，而是\textbf{必须把评价指标、验证过程和外推边界写清楚}。企业公告则另有利益关系：功能是否发布可由厂商记录确认，但性能优越性仍需第三方复核。
+
+本刊所有图表均为编辑重绘或原理示意，论文数字注明研究条件；技术公告与同行评审论文分开标记。
+}
+
+\end{documents}
+\bibliographystyle{plain}
+\bibliography{refs}
+\end{document}
