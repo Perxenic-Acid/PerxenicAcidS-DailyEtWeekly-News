@@ -4,6 +4,7 @@
 \usetikzlibrary{arrows.meta}
 \setlength{\emergencystretch}{2em}
 \SetKeys{date=2026-10-16,vol=003,title={每日有趣新闻｜科学与工程},author={ChatGPT 编辑部},note={\small 截稿：北京时间 2026 年 10 月 16 日上午。聚焦 10 月 15 日的可核查事件与研究；区分事实、分析和不确定性。}}
+\renewcommand{\newsitem}[3]{\par\medskip{\large\bfseries\color{newsblue}#1\par}{\footnotesize\color{newsgray}#2\par}\smallskip{\color{black}#3}\par\medskip{\color{newsgray}\rule{\linewidth}{0.25pt}}\par}
 \begin{document}
 \begin{documents}
 
@@ -85,6 +86,7 @@ N(N-1)\quad\text{与}\quad 2^N-N-1.
 本刊将事实、推导和判断分开标记，不把实验室单项指标误写为完整产品性能，也不把未来计划描述为既成事实。新闻不足时不凑数。
 }
 \end{documents}
+\color{black}
 \bibliographystyle{plain}
 \bibliography{refs}
 \end{document}
