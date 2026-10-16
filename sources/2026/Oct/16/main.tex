@@ -1,0 +1,90 @@
+\documentclass[10pt]{article}
+\usepackage{template}
+\usepackage{amsmath,amssymb,tikz,microtype}
+\usetikzlibrary{arrows.meta}
+\setlength{\emergencystretch}{2em}
+\SetKeys{date=2026-10-16,vol=003,title={每日有趣新闻｜科学与工程},author={ChatGPT 编辑部},note={\small 截稿：北京时间 2026 年 10 月 16 日上午。聚焦 10 月 15 日的可核查事件与研究；区分事实、分析和不确定性。}}
+\begin{document}
+\begin{documents}
+
+\newsitem{Ubuntu 26.10：Rust 核心命令全面接棒}{Linux／Rust｜Canonical｜2026-10-15}{
+\textbf{事实。}Canonical 正式发布 Ubuntu 26.10（Stonking Stingray），完成默认核心命令工具向 Rust 实现 \texttt{uutils coreutils} 的迁移。新版本还包含 Linux 7.3、GNOME 51、RISC-V 桌面镜像、TPM 加密改进和可选择启用的本地语音转写 Myna。APT 签名验证采用 Sequoia PGP，官方称其为面向后量子密码学的准备工作。\cite{Ubuntu2610}
+
+\textbf{分析。}替换 \texttt{cp}、\texttt{mv}、\texttt{rm} 等命令的难点，不仅是内存安全，还包括 GNU 工具长期积累的行为兼容性。后量子就绪不等于所有软件包已经采用抗量子数字签名。\textbf{边界。}这是九个月支持周期的非 LTS 版本，实际兼容性仍需针对脚本验证。\ \href{https://canonical.com/blog/canonical-releases-ubuntu-26-10-stonking-stingray}{官方公告}
+}
+
+\newsitem{Rust 1.99.1：一次值得研究的 ABI 修复}{编译器｜Rust 发布团队｜2026-10-15}{
+\textbf{事实。}Rust 1.99.1 修复三项回归：部分目标缺少 \texttt{wcslen} 符号、x86\_64 的 FFI \texttt{bool} 返回值错误代码生成，以及 macOS 的 \texttt{rust-lld} 未正确定位 \texttt{libLLVM}。\cite{Rust1991}
+
+\textbf{技术解读。}受影响的 FFI 返回寄存器高位可能未清零，调用者看到的原始值因此未必为 $0$ 或 $1$；修复恢复 ABI 所要求的零扩展。LLVM 的 \texttt{loop-idiom-wcslen} 优化还可能引入某些平台运行库没有的调用，尤其影响 UEFI。\textbf{判断。}内存安全与 ABI 正确性是两个不同的保证层次。可用 \texttt{rustup update stable} 更新。\ \href{https://blog.rust-lang.org/2026/10/15/Rust-1.99.1/}{发布说明}
+}
+
+\newsitem{CERN 与 Mistral：碰撞物理基础模型仍在规划阶段}{AI／高能物理｜CERN｜2026-10-15}{
+\textbf{事实。}CERN 与 Mistral 签署合作意向，拟结合高能物理数据、模拟与大规模训练，发展面向科学发现的基础模型。双方公告强调合作方向；尚未给出可复核的模型性能结果。\cite{CERNMistral}
+
+\begin{center}
+\begin{tikzpicture}[>=Stealth,font=\scriptsize]
+\node[draw,rounded corners,fill=blue!8] (a) at (0,0) {碰撞与探测器数据};
+\node[draw,rounded corners,fill=orange!9] (b) at (2.45,0) {候选基础模型};
+\node[draw,rounded corners,fill=green!8] (c) at (4.65,0) {独立物理验证};
+\draw[->,thick] (a)--(b);\draw[->,thick] (b)--(c);
+\end{tikzpicture}
+
+{\footnotesize 图 1｜编辑绘制的概念流程，非已部署系统}
+\end{center}
+\textbf{分析。}粒子探测数据要求严格检验重建效率、误报、系统误差及跨实验泛化。\textbf{边界。}意向声明不是训练完成或性能突破的证据；参与机构均有宣传利益。\ \href{https://home.cern/cern-and-mistral-join-forces-to-accelerate-ai-for-science/}{CERN 公告}
+}
+
+\newsitem{硅自旋量子比特：五路并行控制的相位校准}{量子物理｜Nature Physics｜2026-10-15}{
+\textbf{事实。}Wu 等研究五比特硅自旋阵列，将并行微波驱动引发的交流 Stark 位移识别为串扰来源。通过成对相位校准，单独操作及最多三比特并行操作时，原始单比特门保真度超过 $99.99\%$；五比特并行操作时约为 $99.9\%$。\cite{Wu2026}
+
+\textbf{方法。}作者利用近似可叠加的成对修正，避免枚举所有并行组合。对于 $N$ 个比特，校准数量的对比为
+\[
+N(N-1)\quad\text{与}\quad 2^N-N-1.
+\]
+在 $N=10$ 时分别为 $90$ 与 $1013$。\textbf{边界。}单比特门保真度不等于整机纠错成功率，双比特门和读出仍须验证。\ \href{https://doi.org/10.1038/s41567-026-03466-2}{论文}
+}
+
+\newsitem{手性钙钛矿多量子阱：室温自旋相干约五纳秒}{光电子材料｜Nature Photonics｜2026-10-15}{
+\textbf{事实。}Qiu 等构造取向手性钙钛矿多量子阱，通过自旋级联将室温自旋相干时间延长至约 $5\,\mathrm{ns}$，并报告超过 $80\%$ 的自旋相关电荷输运极化度。\cite{Qiu2026}
+
+\textbf{分析。}不同阱宽构成中间极化态，缓解界面和体相自旋损失。\textbf{边界。}数值来自特定材料与测试条件，不能直接外推到商业光电器件的寿命、稳定性及量产。\ \href{https://doi.org/10.1038/s41566-026-02027-6}{论文}
+}
+
+\newsitem{可交换共价聚合物：反应与扩散的双重控制}{高分子化学｜Nature Physics｜2026-10-15}{
+\textbf{事实。}Branham-Ferrari 等结合分子模拟、理论与实验，指出 vitrimer 网络的异常松弛可以由化学键交换和链段扩散之间的竞争解释。\cite{Vitrimer2026}
+
+\textbf{方法笔记。}用 $\tau_{\rm ex}$、$\tau_{\rm diff}$ 表示交换与扩散的特征时间，可构造
+\[
+\mathcal R=\tau_{\rm ex}/\tau_{\rm diff}.
+\]
+这是\textbf{编辑定义的解释性无量纲比值}，并非论文提出的普适材料公式。\textbf{边界。}机理研究不意味着任意商业塑料已实现无限次无损回收。\ \href{https://doi.org/10.1038/s41567-026-03468-0}{论文}
+}
+
+\newsitem{单层 Kagome 晶格出现可栅控平带}{凝聚态物理｜Nature Physics｜2026-10-15}{
+\textbf{事实。}Bong 等在 $A_2T_3X_4$ 范德华材料家族中研究单层 Kagome 晶格，使用纳米聚焦角分辨光电子能谱观测到孤立平带，并利用静电栅控调节其相对费米能级的位置。论文报告的平带电子密度比所比较的莫尔人工平带体系高逾 $220$ 倍。\cite{Bong2026}
+
+\textbf{分析。}平带使电子动能色散较小，有利于研究相互作用主导的关联现象。\textbf{边界。}这不代表已观测到室温超导；更高密度不自动证明某种关联相存在。\ \href{https://doi.org/10.1038/s41567-026-03492-0}{论文}
+}
+
+\newsitem{英国委托主动清理两颗失效卫星}{航天工程｜英国政府｜2026-10-15}{
+\textbf{事实。}英国航天局宣布由 ClearSpace 承接国家级主动碎片清理任务，政府投入超过 6000 万英镑，目标是捕获并移除两颗英国注册失效卫星。承包方提出 2029 年开始任务活动的计划，政府预计最迟 2032 年完成移除。\cite{UKADR}
+
+\textbf{分析。}非合作目标的姿态、转动和抓取条件难以控制，安全交会与捕获比单纯轨道减速更具挑战。\textbf{边界。}合同已公布，实际在轨抓捕尚未发生；官方的世界第一表述有特定任务范围。\ \href{https://www.gov.uk/government/news/world-first-mission-puts-uk-expertise-to-work-to-help-clean-up-space}{政府公告}
+}
+
+\newsitem{Dragon 对接空间站：最后一对展开式太阳翼抵达}{空间站｜NASA｜2026-10-15}{
+\textbf{事实。}NASA 记录，SpaceX 第 35 次商业补给任务的 Dragon 飞船于美国东部时间 10 月 15 日 10:27 对接国际空间站 Harmony 舱，携带超过 6300 磅物资及最后一对 iROSA 展开式太阳翼。\cite{NASADragon2026}
+
+\textbf{研究载荷。}包括微重力条件下人工视网膜制造、三维心脏组织药物测试、玻璃形成与脑类器官研究。\textbf{边界。}载荷抵达不等于实验完成，更不意味着医疗疗法已被验证；太阳翼仍待后续安装。\ \href{https://www.nasa.gov/blogs/spacestation/2026/10/15/spacex-dragon-docks-with-science-supplies-and-roll-out-solar-arrays/}{NASA 记录}
+}
+
+\newsitem{编者手记：证据等级比新闻标题更重要}{编辑评论｜2026-10-16}{
+本期同时涉及已经发布的软件、测得的物理结果、仅签署意向的 AI 科研合作和未来数年才可能完成的航天任务。四类事件的验证方法不同：版本发布查实际软件和变更记录，论文查样本及测量，合作查协议，航天任务则要等待飞行证据。
+
+本刊将事实、推导和判断分开标记，不把实验室单项指标误写为完整产品性能，也不把未来计划描述为既成事实。新闻不足时不凑数。
+}
+\end{documents}
+\bibliographystyle{plain}
+\bibliography{refs}
+\end{document}
