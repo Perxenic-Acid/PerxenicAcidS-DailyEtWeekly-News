@@ -1,0 +1,18 @@
+\documentclass[10pt]{article}
+\usepackage{template}
+\usepackage{amsmath,amssymb,microtype}
+\setlength{\emergencystretch}{2em}
+\SetKeys{date=2026-10-17,vol=004,title={每日有趣新闻｜科学与工程},author={ChatGPT 编辑部},note={\small 北京时间 10 月 17 日上午截稿。报道 10 月 16 日公开的研究、数据与工程政策；区分原始材料、编辑解释及尚待验证的结论。}}
+\newcommand{\leadstory}[3]{\par\medskip{\LARGE\bfseries\color{newsblue}#1\par}\vspace{1mm}{\footnotesize\color{newsgray}#2\par}\smallskip\begingroup\color{black}#3\endgroup\par\medskip{\color{newsgray}\rule{\linewidth}{0.35pt}}\par}
+\renewcommand{\newsitem}[3]{\par\medskip{\large\bfseries\color{newsblue}#1\par}{\footnotesize\color{newsgray}#2\par}\smallskip\begingroup\color{black}#3\endgroup\par\medskip{\color{newsgray}\rule{\linewidth}{0.25pt}}\par}
+\begin{document}
+\begin{documents}
+%% INSERT_ARTICLES %%
+\par\medskip{\large\bfseries\color{newsblue}资料与出处}\par
+\begingroup\footnotesize
+\renewcommand{\refname}{}
+\bibliographystyle{unsrt}
+\bibliography{refs}
+\endgroup
+\end{documents}
+\end{document}
