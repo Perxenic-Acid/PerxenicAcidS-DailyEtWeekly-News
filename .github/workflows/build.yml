@@ -34,7 +34,21 @@ jobs:
             rel="${dir#sources/}"
             dest="outputs/${rel}.pdf"
             mkdir -p "$(dirname "$dest")"
-            (cd "$dir" && xelatex -interaction=nonstopmode -halt-on-error main.tex && bibtex main && xelatex -interaction=nonstopmode -halt-on-error main.tex && xelatex -interaction=nonstopmode -halt-on-error main.tex)
+            (
+              cd "$dir"
+              xelatex -interaction=nonstopmode -halt-on-error main.tex
+              if grep -q '\\\\citation{' main.aux; then
+                if [[ ! -f refs.bib ]]; then
+                  echo "::error file=$dir/main.tex::Missing refs.bib for cited document" >&2
+                  exit 1
+                fi
+                bibtex main
+              else
+                echo "No BibTeX citations in $dir; skipping bibtex"
+              fi
+              xelatex -interaction=nonstopmode -halt-on-error main.tex
+              xelatex -interaction=nonstopmode -halt-on-error main.tex
+            )
             cp "$dir/main.pdf" "$dest"
           done < <(find sources -type f -name main.tex | sort)
           find outputs -type f -name '*.pdf' -print
