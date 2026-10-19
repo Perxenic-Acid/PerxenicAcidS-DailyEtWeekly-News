@@ -1,0 +1,11 @@
+\begin{center}
+\begin{tikzpicture}[font=\scriptsize,>=Latex,node distance=0.22cm]
+\node[draw=blue!45,rounded corners=2pt,fill=blue!5,text width=1.58cm,align=center,minimum height=1.05cm] (a) {粒子碰撞\\（模拟或实测）};
+\node[draw=blue!45,rounded corners=2pt,fill=blue!5,text width=1.58cm,align=center,minimum height=1.05cm,right=of a] (b) {探测器响应\\（能量、径迹）};
+\node[draw=orange!70,rounded corners=2pt,fill=orange!8,text width=1.58cm,align=center,minimum height=1.05cm,right=of b] (c) {模型重建\\（识别、估计）};
+\node[draw=teal!70,rounded corners=2pt,fill=teal!8,text width=1.58cm,align=center,minimum height=1.05cm,right=of c] (d) {物理分析\\（误差、检验）};
+\draw[->,thick] (a) -- (b);\draw[->,thick] (b) -- (c);\draw[->,thick] (c) -- (d);
+\end{tikzpicture}
+
+{\scriptsize\color{newsgray}图 2｜编辑部原创流程示意；箭头表示分析依赖关系，并非 CERN 已部署的系统结构。模拟训练与真实数据验证必须区分。}
+\end{center}
