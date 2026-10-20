@@ -1,0 +1,12 @@
+\begin{center}
+\begin{tikzpicture}[scale=.39]
+\foreach \x in {0,...,4} {\foreach \y in {0,...,4} {\draw[gray!50] (\x,\y) rectangle ++(1,1);}}
+\foreach \x/\y in {0/0,0/2,2/0,2/2} {\fill[newsblue!80] (\x+.5,\y+.5) circle (.31);}
+\draw[very thick,newsblue] (.5,.5) rectangle (2.5,2.5);
+\node[font=\small,anchor=west] at (6,4.3) {同一玩家占有四角};
+\node[font=\small,anchor=west] at (6,3.0) {四角构成轴平行正方形};
+\node[font=\small,anchor=west] at (6,1.7) {即满足本游戏获胜条件};
+\node[font=\scriptsize,gray,anchor=west] at (6,.4) {本刊示意，非论文棋谱};
+\end{tikzpicture}
+\par{\scriptsize 图2　正方形达成游戏规则示意。四枚蓝子属于同一玩家，四角构成一个边与棋盘边平行的正方形；本刊依据 Reid（2026）定义绘制。}
+\end{center}

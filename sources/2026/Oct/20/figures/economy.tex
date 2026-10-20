@@ -1,0 +1,14 @@
+\begin{center}
+\begin{tikzpicture}[x=0.22cm,y=0.33cm]
+\draw[->,gray] (-8,0)--(20,0);
+\foreach \x in {-5,0,5,10} {\draw[gray!45] (\x,-.18)--(\x,9.3); \node[font=\tiny,gray,below] at (\x,-.18) {\x\%};}
+\foreach \label/\val/\y/\col in {工业增加值/5.3/8/newsblue,高技术制造/14.3/7/newsblue,社会消费品零售/1.1/6/newsblue,固定资产投资/-7.2/5/red!70!black,货物进出口/18.8/4/newsblue} {
+\pgfmathsetmacro{\start}{min(0,\val)}
+\pgfmathsetmacro{\width}{abs(\val)}
+\fill[\col!65] (\start,\y-.24) rectangle ++(\width,.49);
+\node[font=\tiny,anchor=east] at (-8.5,\y) {\label};
+\node[font=\tiny,anchor=west] at (\val+.3,\y) {\val\%};
+}
+\end{tikzpicture}
+\par{\scriptsize 图1　2026年前三季度部分指标同比增速（\%）。工业、高技术制造业为规模以上工业增加值；房地产开发投资同比下降20.6\%，未列入坐标；投资与贸易为各自公布口径。各指标不可直接相加。数据：国家统计局，2026-10-19；本刊绘制。}
+\end{center}

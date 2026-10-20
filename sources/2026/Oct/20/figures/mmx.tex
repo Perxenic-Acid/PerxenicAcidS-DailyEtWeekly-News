@@ -1,0 +1,10 @@
+\begin{center}
+\begin{tikzpicture}[node distance=1.1mm, every node/.style={font=\scriptsize}, box/.style={draw=newsblue,rounded corners=1pt,fill=newsblue!5,text width=3.25cm,align=center,minimum height=.66cm}]
+\node[box] (a) {2026-10-20　地球发射\quad 已确认};
+\node[box,below=of a] (b) {飞往火星、探测火卫一／火卫二\quad 任务计划};
+\node[box,below=of b] (c) {火卫一取样、封存、返回\quad 尚未完成};
+\node[box,below=of c] (d) {2031 年左右地球接收样品\quad 计划目标};
+\foreach \p/\q in {a/b,b/c,c/d} {\draw[-{Stealth[length=1.7mm]},newsblue] (\p)--(\q);}
+\end{tikzpicture}
+\par{\scriptsize 图3　MMX 任务时间线。发射与分离据 JAXA 10 月 20 日公告确认；后续节点为任务目标，不代表已经完成。本刊绘制。}
+\end{center}
