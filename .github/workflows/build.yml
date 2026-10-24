@@ -37,7 +37,7 @@ jobs:
             (
               cd "$dir"
               xelatex -interaction=nonstopmode -halt-on-error main.tex
-              if grep -q '\\\\citation{' main.aux; then
+              if grep -Fq '\citation{' main.aux; then
                 if [[ ! -f refs.bib ]]; then
                   echo "::error file=$dir/main.tex::Missing refs.bib for cited document" >&2
                   exit 1
