@@ -1,0 +1,11 @@
+\begin{center}
+\begin{tikzpicture}[scale=0.65]
+\foreach \n/\c in {1/newsblue,2/newsgray,3/newsgray,4/newsblue} {
+  \pgfmathtruncatemacro{\xx}{\n-1}
+  \fill[\c!35] (\xx*1.15,0) rectangle ++(0.96,0.85);
+  \draw[newsgray] (\xx*1.15,0) rectangle ++(0.96,0.85);
+  \node at (\xx*1.15+0.48,0.43) {\n};
+}
+\node[anchor=west,font=\scriptsize] at (0,-0.5) {蓝组\{1,4\}；灰组\{2,3\}；两组内都没有$x+y=z$。};
+\end{tikzpicture}
+\par{\scriptsize\color{newsgray}图3｜编辑部原创最小示例：$\{1,2,3,4\}$的两色无和划分。它只解释定义，不是537的证明证书。}\end{center}
