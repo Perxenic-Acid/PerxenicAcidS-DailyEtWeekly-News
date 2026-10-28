@@ -1,0 +1,10 @@
+\begin{center}\begin{tikzpicture}[x=0.02cm,y=0.62cm,font=\scriptsize]
+\draw[->,gray] (0,0)--(310,0);
+\foreach \x in {100,200,300}{\draw[gray!30] (\x,0)--(\x,3.8);\node[gray] at (\x,-0.27) {\x};}
+\fill[newsblue!75] (0,2.75) rectangle (153,3.27);
+\fill[newsblue!55] (0,1.75) rectangle (267,2.27);
+\fill[newsblue!35] (0,.75) rectangle (126,1.27);
+\node[anchor=east] at (-4,3) {CO$_2$};\node[anchor=east] at (-4,2) {CH$_4$};\node[anchor=east] at (-4,1) {N$_2$O};
+\node[anchor=west] at (156,3) {153\%};\node[anchor=west] at (270,2) {267\%};\node[anchor=west] at (129,1) {126\%};
+\node[align=center,gray,text width=6.6cm] at (150,-0.95) {相对于1750年前浓度基线（基线=100\%），不是年度排放增长率。来源：WMO《温室气体公报》第22期，2025年观测。};
+\end{tikzpicture}\end{center}
