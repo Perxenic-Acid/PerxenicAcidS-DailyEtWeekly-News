@@ -1,0 +1,11 @@
+\begin{center}
+\begin{tikzpicture}[font=\scriptsize, node distance=8mm and 16mm, >=Stealth,
+ every node/.style={draw=newsblue!70,rounded corners=2pt,inner sep=4pt}]
+\node (top) {$\mathbb F_{2^6}$};
+\node (midl) [below left=9mm and 13mm of top] {$\mathbb F_{2^2}$};
+\node (midr) [below right=9mm and 13mm of top] {$\mathbb F_{2^3}$};
+\node (bottom) [below right=9mm and 13mm of midl] {$\mathbb F_2$};
+\draw[->] (bottom)--(midl);\draw[->] (bottom)--(midr);
+\draw[->] (midl)--(top);\draw[->] (midr)--(top);
+\end{tikzpicture}
+\par\vspace{1mm}{\scriptsize\color{newsgray}图3｜有限域$\mathbb F_{2^6}$的部分中间域；箭头表示包含关系。完全正规性要求对每个中间域分别成立。本刊依据有限域结构绘制。}\end{center}

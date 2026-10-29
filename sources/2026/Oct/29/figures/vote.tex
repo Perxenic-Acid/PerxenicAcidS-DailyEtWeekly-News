@@ -1,0 +1,15 @@
+\begin{center}
+\begin{tikzpicture}[x=0.030cm,y=0.72cm, font=\scriptsize]
+\node[anchor=west,font=\bfseries] at (0,2.4) {联大古巴禁运决议投票变化（票数）};
+\foreach \y/\yr/\yes/\no/\abs in {1.5/2025/165/7/12,0.4/2026/130/17/25}{
+  \node[anchor=east] at (-2,\y+.15) {\yr};
+  \fill[newsblue!80] (0,\y) rectangle (\yes,\y+.36);
+  \fill[orange!75] (\yes,\y) rectangle ({\yes+\no},\y+.36);
+  \fill[gray!55] ({\yes+\no},\y) rectangle ({\yes+\no+\abs},\y+.36);
+  \node[anchor=west] at (0,\y-.18) {赞成\yes，反对\no，弃权\abs};
+}
+\node[anchor=west,newsblue] at (0,-.28) {\rule{1.8mm}{1.8mm}\,赞成};
+\node[anchor=west] at (50,-.28) {\textcolor{orange}{\rule{1.8mm}{1.8mm}}\,反对};
+\node[anchor=west] at (99,-.28) {\textcolor{gray}{\rule{1.8mm}{1.8mm}}\,弃权};
+\end{tikzpicture}
+\par\vspace{1mm}{\scriptsize\color{newsgray}图1｜两年已记录的三类投票，不含未投票国家；横轴长度按票数比例。2025年联合国记录，2026年路透社、美联社10月28日报道；本刊据数据重绘。}\end{center}
