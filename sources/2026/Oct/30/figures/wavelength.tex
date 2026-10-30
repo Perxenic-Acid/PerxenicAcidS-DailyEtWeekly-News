@@ -1,0 +1,9 @@
+\begin{center}\begin{tikzpicture}[font=\scriptsize,scale=.8,transform shape]
+\foreach \x/\c/\t/\s in {0/blue!25/可见光/尘埃遮挡,2.3/orange!30/近红外/透视部分尘埃,4.6/red!30/中红外/暖尘辐射}{
+\fill[\c] (\x,0) rectangle ++(2,1.0);
+\draw[gray] (\x,0) rectangle ++(2,1.0);
+\node[align=center,text width=1.9cm] at (\x+1,.50) {\t\\\s};
+}
+\draw[->,thick] (0,-.3)--(6.6,-.3);
+\node[below] at (3.3,-.3) {波长由短到长（仅定性示意）};
+\end{tikzpicture}\par{\footnotesize\color{newsgray}图2｜原创波段对照，不是NASA观测图。依据NASA／STScI 10月29日公开的Hubble、NIRCam、MIRI说明；实际颜色为滤光片数据映射。}\end{center}
