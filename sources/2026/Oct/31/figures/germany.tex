@@ -1,0 +1,5 @@
+\begin{center}\begin{tikzpicture}[x=.8cm,y=.27cm,font=\scriptsize]
+\draw[->] (0,0)--(8.3,0);\foreach \x/\lab/\val/\col in {1/9月CPI同比/3.3/blue!65,3/10月CPI同比/2.8/blue!35,5/10月核心同比/2.1/teal!50,7/Q3 GDP环比/0.2/orange!70} {
+\fill[\col] (\x-.5,0) rectangle (\x+.5,{\val*3});\node[above] at (\x,{\val*3}) {\val\%};\node[align=center,rotate=32,anchor=north east] at (\x+.3,-.15) {\lab};}
+\draw[dotted,gray] (0,9)--(8.2,9);\node[anchor=west,text=newsgray] at (0,11.2) {不同口径，仅并列展示，不能直接比较贡献};
+\end{tikzpicture}\vspace{3mm}\par{\scriptsize\color{newsgray}图3　德国初步统计。9月CPI同比3.3\%、10月2.8\%、核心2.1\%；Q3 GDP经调整环比0.2\%。来源：Destatis 10月30日；编辑部制图。}\end{center}

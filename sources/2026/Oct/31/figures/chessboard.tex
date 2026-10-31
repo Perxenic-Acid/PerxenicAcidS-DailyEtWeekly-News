@@ -1,0 +1,5 @@
+\begin{center}\begin{tikzpicture}[scale=.43]
+\foreach \x in {0,...,4}{\foreach \y in {0,...,3}{\pgfmathtruncatemacro{\shade}{mod(\x+\y,2)}\ifnum\shade=0 \fill[blue!9] (\x,\y) rectangle +(1,1);\fi\draw[gray!70] (\x,\y) rectangle +(1,1);}}
+\foreach \x/\y in {0/3,2/1,4/0}{\node[font=\Large,text=newsblue] at (\x+.5,\y+.5) {$\mathsf{R}$};}
+\node[anchor=west,font=\scriptsize,align=left] at (5.6,2.1) {任意两车不得\\同一行或列};
+\end{tikzpicture}\par{\scriptsize\color{newsgray}图7　$4\times5$棋盘上的合法三车摆法；每个摆法及其子摆法组成复形的面。仅示意定义，不是扭同调证明。编辑部绘制。}\end{center}

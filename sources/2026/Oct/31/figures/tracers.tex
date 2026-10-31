@@ -1,0 +1,9 @@
+\begin{center}\begin{tikzpicture}[>=Latex,scale=.9,font=\scriptsize]
+\fill[blue!6] (0,0) ellipse (1.3 and .8);\draw[newsblue,thick] (0,0) ellipse (1.3 and .8);\node at (0,0) {地球磁层};
+\draw[orange!80!black,very thick,->] (-3,1.2) -- (-1.6,.85);\draw[orange!80!black,very thick,->] (-3,.3) -- (-1.5,.35);\node[orange!70!black] at (-2.5,-.15) {太阳风};
+\draw[red!70!black,very thick] (-1.1,.55) .. controls (-.6,1.65) and (.5,1.65) .. (1.1,.65);
+\node[draw,fill=white,rounded corners,inner sep=2pt] (s1) at (1.7,1.6) {卫星A};
+\node[draw,fill=white,rounded corners,inner sep=2pt] (s2) at (3,1.6) {卫星B};
+\draw[->,thick] (s1)--(s2);\draw[dashed,->] (s1)--(.7,1.03);\draw[dashed,->] (s2)--(.9,.9);
+\node[align=center] at (2.15,-.35) {相继采样：区分\\空间结构与时间变化};
+\end{tikzpicture}\par{\scriptsize\color{newsgray}图2　TRACERS双星采样思想；磁层、极隙与卫星位置均为\textbf{概念示意，非真实轨道或观测图}。来源：NASA，10月29日；编辑部绘制。}\end{center}
