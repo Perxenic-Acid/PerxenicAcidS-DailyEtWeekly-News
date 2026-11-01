@@ -1,0 +1,7 @@
+\begin{center}\begin{tikzpicture}[>=Latex,node distance=1.2mm, every node/.style={font=\scriptsize},box/.style={draw=newsblue,rounded corners,align=center,minimum width=4.2cm,minimum height=0.55cm,fill=newsblue!5}]
+\node[box] (a) {研究级数论问题与候选证明};
+\node[box,below=of a] (b) {自然语言证明／CAS代码／Lean文件};
+\node[box,below=of b] (c) {语义检查、计算复算、形式化内核核验};
+\node[box,below=of c] (d) {专家复核与公开可复现材料};
+\draw[->,thick] (a)--(b);\draw[->,thick] (b)--(c);\draw[->,thick] (c)--(d);
+\end{tikzpicture}\par\vspace{1mm}{\scriptsize\color{newsgray}图3｜编辑部概念流程，非论文原始算法图；不同证据链的检查力度不相同，Lean文件须实际通过内核才算机器核验。}\end{center}
