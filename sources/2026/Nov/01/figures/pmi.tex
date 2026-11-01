@@ -1,0 +1,11 @@
+\begin{center}\begin{tikzpicture}[x=0.60cm,y=0.24cm,font=\scriptsize]
+\node[anchor=west,font=\bfseries] at (0,15.2) {10月PMI及行业分化（\%）};
+\draw[newsgray,dashed] (8,0) -- (8,14);
+\node[above] at (8,14) {50 荣枯线};
+\foreach \y/\lab/\v in {12/制造业/49.3,10/非制造业/49.7,8/综合产出/49.7,6/高技术制造业/51.3,4/大型制造企业/50.2,2/小型制造企业/47.5}{
+\node[anchor=east] at (4.2,\y+0.6) {\lab};
+\pgfmathsetmacro{\w}{(\v-45)*1.6}
+\fill[newsblue!65] (0,\y) rectangle (\w,\y+1.2);
+\node[anchor=west] at ({\w+0.2},\y+0.6) {\v};
+}
+\end{tikzpicture}\par\vspace{1mm}{\scriptsize\color{newsgray}图2｜2026年10月扩散指数，横向条形以45为截断基线（非零起点），仅为显示50附近差异；来源：国家统计局10月31日。}\end{center}
