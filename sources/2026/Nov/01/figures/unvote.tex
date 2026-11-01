@@ -1,0 +1,14 @@
+\begin{center}\resizebox{\columnwidth}{!}{\begin{tikzpicture}[x=0.33cm,y=0.42cm, font=\scriptsize]
+\node[anchor=west,font=\bfseries] at (0,5.6) {安理会10月30日两项草案表决（15国）};
+\foreach \y/\name/\a/\b/\c in {3.6/美国草案/11/1/3,1.6/俄罗斯草案/3/1/11}{
+ \node[anchor=east] at (7.5,\y+0.5) {\name};
+ \fill[newsblue!75] (8,\y) rectangle ({8+\a},\y+1);
+ \fill[red!65] ({8+\a},\y) rectangle ({8+\a+\b},\y+1);
+ \fill[newsgray!40] ({8+\a+\b},\y) rectangle (23,\y+1);
+ \node[white] at ({8+\a/2},\y+0.5) {\a};
+ \node[anchor=west] at (24,\y+0.5) {赞成／反对／弃权};
+}
+\fill[newsblue!75] (0,0) rectangle (1,0.5);\node[anchor=west] at (1.4,0.25) {赞成};
+\fill[red!65] (7,0) rectangle (8,0.5);\node[anchor=west] at (8.4,0.25) {反对};
+\fill[newsgray!40] (14,0) rectangle (15,0.5);\node[anchor=west] at (15.4,0.25) {弃权};
+\end{tikzpicture}}\par\vspace{1mm}{\scriptsize\color{newsgray}图1｜编辑部按美联社及路透社报道绘制；美国草案遭俄否决，俄草案仅3票赞成，未达9票门槛。非现场图。}\end{center}
