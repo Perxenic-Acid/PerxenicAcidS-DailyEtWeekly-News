@@ -1,0 +1,7 @@
+\begin{center}\begin{tikzpicture}[x=0.8cm,y=0.65cm,font=\scriptsize]
+\node[anchor=west,font=\bfseries] at (0,3.7) {第三季度GDP环比增长初值（\%）};
+\foreach \y/\lab/\v in {2.6/欧元区/0.4,1.2/欧盟/0.5}{
+\node[anchor=east] at (1.4,\y+0.25) {\lab};
+\fill[newsblue!65] (1.7,\y) rectangle ({1.7+\v*8},\y+0.55);
+\node[anchor=west] at ({1.9+\v*8},\y+0.25) {\v\%};}
+\end{tikzpicture}\par\vspace{1mm}{\scriptsize\color{newsgray}图5｜欧盟统计局10月30日初步估算；两组均为经季节调整环比，非同比；基线为0。}\end{center}
