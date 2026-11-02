@@ -1,0 +1,7 @@
+\begin{center}
+\begin{tikzpicture}[>=Stealth,every node/.style={font=\scriptsize}]
+\foreach \a/\x/\y in {a/0/1.5,b/-1.2/-.3,c/1.2/-.3}{\node[draw,circle,fill=blue!10,minimum size=6mm] (\a) at (\x,\y) {\a};}
+\draw[->,thick] (a)--(b); \draw[->,thick] (b)--(c); \draw[->,thick] (c)--(a);
+\node[align=left] at (4.1,.6) {有向三角形：$a\to b\to c\to a$\\每对顶点之间恰有一条定向边\\这是锦标赛中的一个循环};
+\end{tikzpicture}
+\par\scriptsize 图4｜依据图论定义自行绘制的三顶点例子，不是论文反例的实际大型构造。\end{center}

@@ -1,0 +1,12 @@
+\begin{center}
+\begin{tikzpicture}[x=.9cm,y=.65cm,every node/.style={font=\scriptsize}]
+\draw[->] (0,0)--(8,0) node[right]{十亿美元};
+\foreach \x in {0,2,4,6}{\draw (\x,0.09)--(\x,-.09) node[below]{\x};}
+\fill[blue!45] (0,.65) rectangle (6.3,1.15);
+\node[anchor=west] at (6.4,.9) {6.3 被盗资产估值};
+\fill[teal!55] (0,1.6) rectangle (6.0,2.1);
+\node[anchor=west] at (6.1,1.85) {约6.0 已补足};
+\fill[orange!60] (0,2.55) rectangle (.3,3.05);
+\node[anchor=west] at (.42,2.8) {约0.3 尚未补足（估算）};
+\end{tikzpicture}
+\par\scriptsize 图2｜据路透社11月1日报道及币安声明绘制。金额为当时披露的美元估值；「补足」包含购买替代资产，不等于全部被盗币已追回。\end{center}
