@@ -1,0 +1,5 @@
+\begin{center}\begin{tikzpicture}[x=1cm,y=0.5cm]
+\draw[->] (0,0)--(6.9,0) node[right,font=\tiny] {每轮观测次数 $n$};
+\draw[->] (0,0)--(0,4.7) node[above,font=\tiny] {阶数};
+\foreach \n/\v in {1/1,2/2,3/4,4/8}{\fill[newsblue!80] ({1.2*\n-0.45},0) rectangle ({1.2*\n+0.05},{0.45*\v});\node[font=\tiny] at ({1.2*\n-0.2},{0.45*\v+0.24}) {$\v$};\node[font=\tiny] at ({1.2*\n-0.2},-0.24) {$\n$};}
+\end{tikzpicture}\par{\tiny\color{newsgray}图2｜根据 $2^{n-1}$ 绘制的理论上界示意，纵轴按线性比例；并非实验性能数据。}\end{center}
